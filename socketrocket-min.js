@@ -1,0 +1,6 @@
+/*
+Name: SocketRocket.js
+Author: John Newman
+License: MIT
+*/
+(function (a){var b,c={};function g(d,e,f){var i,o=c[d][e],l=o.length;for(i=0;i<l;i+=1){o[i](f);}}function Socket(d){var f=this;c[d]={socket:f,open:[],close:[],message:[],error:[]};f.uri=d;f.getState=function(){return c[d];};f.open=function(){f.socket=new a.WebSocket(d);f.socket.onopen=function(e){g(d,'open',e);};f.socket.onclose=function(e){g(d,'close',e);};f.socket.onmessage=function(e){g(d,'message',e);};f.socket.onerror=function(e){g(d,'error',e);};};f.addTo=function(e,f){c[d][e].push(f);};f.send=function(x){return f.socket?f.socket.send(x):false;};f.close=function(){return f.socket?f.socket.close():false;};f.clear=function(e){delete c[d][e];};f.destroy=function(){f.addTo('close',function(){delete c[d];});f.close();};return f;}b={create:function(d){return new Socket(d);},getState:function(){return c;},clear:function(){var i,h=function(i){c[i].socket.addTo('close',function(){delete c[i];});};for(i in c){if(Object.prototype.hasOwnProperty.call(c,i)){h(i);c[i].socket.close();}}}};a.SR=a.SocketRocket=b;}(this));
