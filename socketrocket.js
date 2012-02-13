@@ -3,7 +3,7 @@ Name: SocketRocket.js
 Date: 12/23/2011
 Author: John Newman
 License: MIT
-Version: 1.0
+Version: 1.1
 Description: A wrapper for the websocket API.  Allows you a few extra features:
     - Congigure a websocket BEFORE you open it.
     - Manually open a websocket
@@ -28,11 +28,11 @@ Description: A wrapper for the websocket API.  Allows you a few extra features:
         var that = this;
 
         connections[uri] = {
-            "socket" : that,
-            "open" : [],
-            "close" : [],
+            "socket"  : that,
+            "open"    : [],
+            "close"   : [],
             "message" : [],
-            "error" : []
+            "error"   : []
         };
 
         that.uri = uri;
@@ -65,19 +65,19 @@ Description: A wrapper for the websocket API.  Allows you a few extra features:
             return (that.socket) ? that.socket.send(x) : false;
         };
 
-        that.close = function () {
-            return (that.socket) ? that.socket.close() : false;
+        that.close = function (/* args */) {
+            return (that.socket) ? that.socket.close.apply(null, arguments) : false;
         };
 
         that.clear = function (ev) {
-            delete connections[uri][ev];
+            connections[uri][ev] = [];
         };
 
-        that.destroy = function () {
+        that.destroy = function (/* args */) {
             that.addTo('close', function () {
                 delete connections[uri];
             });
-            that.close();
+            that.close.apply(null, arguments);
         };
 
         return that;
@@ -90,7 +90,7 @@ Description: A wrapper for the websocket API.  Allows you a few extra features:
         "getState" : function () {
             return connections;
         },
-        "clear" : function () {
+        "clear" : function (/* args */) {
             var i, remove = function (i) {
                 connections[i].socket.addTo('close', function () {
                     delete connections[i];
@@ -99,7 +99,7 @@ Description: A wrapper for the websocket API.  Allows you a few extra features:
             for (i in connections) {
                 if (Object.prototype.hasOwnProperty.call(connections, i)) {
                     remove(i);
-                    connections[i].socket.close();
+                    connections[i].socket.close.apply(arguments);
                 }
             }
         }

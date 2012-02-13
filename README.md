@@ -73,6 +73,16 @@ have bound to the 'open' event will run.  At this point you have an open, runnin
 point you would like to add another function to one of your websocket events, you can use **.addTo** just like before.  You
 do NOT have to bind all of your events before you open a connection (although it might be smart to do so).
 
+Of course, any time you want to send something down the pipe, you can just run...
+
+```javascript
+
+sock.send();
+
+```
+
+And it works like you'd probably expect.  However, you will have to open the connection before you can send anything across it.
+
 ### Closing the connection
 
 One strange point about the standard websockets API is that once you close a connection it's gone.  You can not re-open the
