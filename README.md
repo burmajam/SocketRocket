@@ -4,7 +4,7 @@
 
 Extra features you get with SocketRocket:
 
-- Congigure a websocket BEFORE you open it.
+- Configure a websocket BEFORE you open it.
 - Manually open a websocket
 - Bind multiple functions to each websocket event
 - Remove functions bound to websocket events
